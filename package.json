@@ -1,0 +1,32 @@
+{
+  "name": "tmlog-monorepo",
+  "private": true,
+  "type": "module",
+  "packageManager": "yarn@4.18.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "rslib build --root packages/core && rslib build --root packages/browser && rslib build --root packages/node",
+    "test": "vitest run",
+    "clean": "node --input-type=module -e \"import { rmSync } from 'node:fs'; for (const name of ['core', 'browser', 'node']) for (const path of ['dist', '.tsbuildinfo']) rmSync('packages/' + name + '/' + path, { recursive: true, force: true });\"",
+    "test:watch": "vitest",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "demo": "yarn build && yarn workspace demo-react-fullstack dev",
+    "demo:build": "yarn build && yarn workspace demo-react-fullstack build",
+    "demo:start": "yarn workspace demo-react-fullstack start",
+    "demo:test:e2e": "yarn demo:build && yarn workspace demo-react-fullstack test:e2e",
+    "typecheck": "tsc --noEmit && yarn workspace demo-react-fullstack typecheck"
+  },
+  "devDependencies": {
+    "@rslib/core": "^1.0.3",
+    "oxlint": "^1.86.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.2",
+    "vitest": "^5.0.3"
+  },
+  "dependencies": {
+    "@types/node": "^26.6.4"
+  }
+}

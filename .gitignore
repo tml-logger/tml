@@ -1,0 +1,11 @@
+node_modules/
+.yarn/
+packages/*/dist/
+packages/*/.tsbuildinfo
+*.tsbuildinfo
+.DS_Store
+.vitest/
+coverage/
+playwright-report/
+test-results/
+.playwright-mcp/
