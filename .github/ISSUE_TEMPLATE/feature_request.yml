@@ -1,0 +1,27 @@
+name: Feature request
+description: Suggest an improvement to TML.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What are you trying to do, and what is difficult with the current behavior?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the behavior or API you would like. A small example is useful.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe any existing APIs or workarounds you have tried.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Include related issues or examples if helpful.

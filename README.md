@@ -227,6 +227,12 @@ Run `yarn lint` to check the project with Oxlint's default starter configuration
 plus rules requiring braces and avoiding ternaries (`.oxlintrc.json`), or
 `yarn lint:fix` to apply automatic fixes.
 
+## Contributing
+
+See the [contribution guide](CONTRIBUTING.md) for bug reports, feature requests,
+and pull requests. For suspected vulnerabilities, follow the
+[security policy](SECURITY.md).
+
 ## License
 
 [MIT](LICENSE).

@@ -1,0 +1,55 @@
+name: Bug report
+description: Report a reproducible problem with TML.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For suspected vulnerabilities, use the [security policy](https://github.com/tml-logger/tml/blob/master/SECURITY.md).
+        Use synthetic data and remove credentials or personal information from logs and reproductions.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Affected package or area
+      options:
+        - "@tmlog/browser"
+        - "@tmlog/node"
+        - "@tmlog/core"
+        - React + Express demo
+        - Documentation or tooling
+        - Multiple packages or unsure
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Package version or commit
+      description: Include versions for each affected package, or the commit if using repository source.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser or Node.js version, operating system, and relevant framework or build tool.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include a minimal code example or reproduction link and the steps needed to see the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include relevant error messages or screenshots, if helpful.
+    validations:
+      required: true
