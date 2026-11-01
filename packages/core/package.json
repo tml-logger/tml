@@ -12,5 +12,23 @@
   },
   "files": [
     "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tml-logger/tml.git",
+    "directory": "packages/core"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "license": "MIT",
+  "description": "Shared event types, scope matching, sanitization, and alert transport for TML.",
+  "keywords": [
+    "tml",
+    "logging",
+    "logger",
+    "structured-logging",
+    "sanitization"
   ]
 }

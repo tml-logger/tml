@@ -9,3 +9,11 @@ coverage/
 playwright-report/
 test-results/
 .playwright-mcp/
+.release/
+
+# Local credentials and environment configuration
+.env
+.env.*
+!.env.example
+.aws/
+.npmrc

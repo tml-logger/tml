@@ -17,7 +17,8 @@
     "demo:build": "yarn build && yarn workspace demo-react-fullstack build",
     "demo:start": "yarn workspace demo-react-fullstack start",
     "demo:test:e2e": "yarn demo:build && yarn workspace demo-react-fullstack test:e2e",
-    "typecheck": "tsc --noEmit && yarn workspace demo-react-fullstack typecheck"
+    "typecheck": "tsc --noEmit && yarn workspace demo-react-fullstack typecheck",
+    "release:pack": "node scripts/pack-release.mjs"
   },
   "devDependencies": {
     "@rslib/core": "^1.0.3",
@@ -28,5 +29,6 @@
   },
   "dependencies": {
     "@types/node": "^26.6.4"
-  }
+  },
+  "license": "MIT"
 }

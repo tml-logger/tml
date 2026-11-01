@@ -15,5 +15,23 @@
   },
   "files": [
     "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tml-logger/tml.git",
+    "directory": "packages/node"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "license": "MIT",
+  "description": "Node.js logging with optional console output, development event buffers, and structured alerts.",
+  "keywords": [
+    "tml",
+    "logging",
+    "logger",
+    "nodejs",
+    "structured-logging"
   ]
 }

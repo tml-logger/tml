@@ -1,22 +1,56 @@
 # TML — Tiny Micro Logger
 
-This is a version of a logging tool I have used for many years. It allows you
-to add permanent logs to your frontend code, but rather than fill console with logs
-it only shows the ones you a watching.
-
-It is very simple by design and tiny in size.
+TML provides scoped logging for browser and Node.js applications. Keep useful
+log calls in your code and choose which scopes appear in the browser console.
+The Node.js logger supports optional console output and an in-memory buffer
+for development. Both loggers support sending structured alerts to your backend.
 
 ## Packages
 
-- `@tmlog/core`
-- `@tmlog/browser`
-- `@tmlog/node`
+| Package | Use it for |
+| --- | --- |
+| [`@tmlog/browser`](packages/browser/README.md) | Browser logging, watch controls, and replaying server events |
+| [`@tmlog/node`](packages/node/README.md) | Node.js logging and development event buffers |
+| [`@tmlog/core`](packages/core/README.md) | Shared event types, scope matching, sanitization, and custom integrations |
+
+## Installation
+
+Install the package for your runtime:
+
+```sh
+npm install @tmlog/browser # Browser applications
+npm install @tmlog/node    # Node.js applications
+```
+
+Browser and Node packages include `@tmlog/core` as a dependency. Install core
+directly only if you use its utilities or types. All packages ship ES modules
+and TypeScript declarations; use `import` syntax in your application.
+
+## Quick start
+
+Add this to your browser application's entry point, then open the browser
+console. The watch is enabled before the log call so the message appears
+immediately:
+
+```ts
+import tml, { installConsole } from '@tmlog/browser';
+
+installConsole();
+tml.watch('app.*');
+tml.info('app.start', 'Application ready', { version: '1.0.0' });
+```
+
+In DevTools, run `tml.unwatch('app.*')` to hide subsequent messages for that
+pattern, or `tml.watch('app.*')` to show them again. Repeat the application
+action that logs the event to see new output. Watching does not replay past
+browser messages.
 
 ## Browser
 
 ```ts
 import tml from '@tmlog/browser';
 
+tml.watch('api.*');
 tml.log('api.request', 'Request complete', { duration: 42 });
 tml.debug('api.request', 'Request details', { url: '/api/items' });
 tml.info('api.request', 'Items loaded');
@@ -78,9 +112,17 @@ if (import.meta.hot) {
 ```ts
 import tml from '@tmlog/node';
 
+tml.configure({ console: true });
 tml.log('db.query', 'Query complete', { duration: 18 });
-const events = tml.dump(); // development only
+const events = tml.dump();
 ```
+
+Console output is disabled by default; `console: true` enables it. The logger
+buffers events when development mode is enabled, which defaults to
+`NODE_ENV !== 'production'`. `dump()` returns the buffered events, or an empty
+array when development mode is disabled. Console output is independent of
+buffering and does not use browser watch patterns. See the
+[Node package guide](packages/node/README.md) for configuration examples.
 
 ## Alerts
 
@@ -112,7 +154,7 @@ Alert events are normalized, recursively redacted, bounded, and safely serialize
 
 ## Full-stack React demo
 
-`packages/demo-react-fullstack` is a private React + Express playground with real
+`packages/demo-react-fullstack` is an unpublished React + Express demo workspace with
 server rendering, hydration, scoped browser logging, API calls, server-log
 replay, and a synthetic alert receiver.
 
@@ -139,8 +181,9 @@ you add manually still apply. Enable Verbose in DevTools for debug messages.
 
 Server buffers belong to individual requests, are limited to 100 events, and
 are sanitized before being sent to the browser. Development includes these
-snapshots in SSR bootstrap data and API responses. Production omits them and
-disables replay; browser logging and alerts remain interactive in both modes.
+snapshots in SSR bootstrap data for explicit replay. API responses contain no
+log snapshots in either mode. Production omits SSR snapshots and disables
+replay; browser logging and alerts remain interactive in both modes.
 The rendered request ID and timestamp are reused during hydration.
 
 Alert examples use fake credentials. The custom transport reports actual HTTP
@@ -150,8 +193,16 @@ stored. The demo binds to localhost and requires no accounts or external service
 
 ## Development
 
-This project uses Yarn 4, with the version pinned in `package.json`. Enable
-Corepack to make the `yarn` command use the project's pinned version:
+Use Node.js 26 for development; this is the version used by the release
+workflow. This project uses Yarn 4, with the version pinned in `package.json`.
+If Corepack is not installed, install the version used by this project:
+
+```sh
+npm install --global corepack@0.36.0 --ignore-scripts
+```
+
+From the repository root, enable Corepack and install dependencies. Build the
+libraries before running the full test suite:
 
 ```sh
 corepack enable
@@ -167,10 +218,15 @@ and TypeScript declarations in its `dist/` directory. Core builds first so the
 browser and Node packages can resolve its declarations.
 
 Tests live in each package's `tests/` directory and use [Vitest](https://vitest.dev/).
-They run directly against source, so no build is required. Use `yarn test` for a
-single run, `yarn test:watch` during development, or `yarn test packages/core` to
-run only one package's tests.
+Library tests run against source, while demo tests also consume the libraries'
+built workspace exports. Run `yarn build` after changing library code before
+running the full suite. Use `yarn test` for a single run, `yarn test:watch`
+during development, or `yarn test packages/core` to run only the core tests.
 
 Run `yarn lint` to check the project with Oxlint's default starter configuration
 plus rules requiring braces and avoiding ternaries (`.oxlintrc.json`), or
-`yarn lint:fix` to apply automatic fixes. Project code style is documented in `AGENTS.md`.
+`yarn lint:fix` to apply automatic fixes.
+
+## License
+
+[MIT](LICENSE).

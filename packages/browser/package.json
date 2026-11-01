@@ -15,5 +15,23 @@
   },
   "files": [
     "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tml-logger/tml.git",
+    "directory": "packages/browser"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "license": "MIT",
+  "description": "Scoped browser logging with persistent watch controls, event replay, and structured alerts.",
+  "keywords": [
+    "tml",
+    "logging",
+    "logger",
+    "browser",
+    "devtools"
   ]
 }
